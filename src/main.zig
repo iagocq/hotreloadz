@@ -91,7 +91,6 @@ pub fn wrap() !void {
     }
 
     const new_lib = args.new_lib orelse return error.NeedNewLib;
-    const old_lib = args.old_lib orelse return error.NeedOldLib;
 
     var pid: u32 = undefined;
 
@@ -113,5 +112,7 @@ pub fn wrap() !void {
 
     const new_tmp_lib = try process_api.copy_tmp(alloc, new_lib);
     try process_api.load_lib_into_process(alloc, pid, new_tmp_lib);
-    try process_api.hotreload(alloc, pid, old_lib, new_tmp_lib);
+    if (args.old_lib) |old_lib| {
+        try process_api.hotreload(alloc, pid, old_lib, new_tmp_lib);
+    }
 }

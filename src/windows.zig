@@ -431,7 +431,7 @@ pub fn copy_tmp(alloc: Allocator, lib: str) ![]u8 {
     const t = std.time.timestamp();
     const full_path = try std.fmt.allocPrint(
         alloc,
-        "{s}{s}-{d}.dll",
+        "{s}{s}.{d}.dll",
         .{ tmp_path, lib[slash_idx..dot_idx], t },
     );
     std.mem.replaceScalar(u8, full_path, '/', '\\');
